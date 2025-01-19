@@ -28,11 +28,7 @@ function formatDuration(seconds: number): string {
 		parts.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
 	}
 
-	const result = parts.join(' ')
-
-	console.log(result);
-
-	return result
+	return parts.join(' ')
 }
 
 const timeString = computed(() => {
