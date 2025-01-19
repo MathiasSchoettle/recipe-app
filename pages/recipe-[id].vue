@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { useRecipeStore } from '@/stores/recipes'
+ 
+const store = useRecipeStore();
+const route = useRoute();
+const recipe = store.getRecipe(Number(route.params.id));
 
 definePageMeta({
 	layout: 'custom',
@@ -10,7 +15,9 @@ definePageMeta({
 	<div class="px-2">
 		<UCard>
 			<template #header>
-				Recipe {{ $route.params.id }}
+				<div>
+					{{ recipe?.title }}
+				</div>
 			</template>
 
 			<Placeholder class="h-56" />
