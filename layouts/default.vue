@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-// TODO set default item on page load, depending on route
-
 const items = [
 	{
 		label: '',
@@ -30,21 +28,19 @@ const ui = {
 			height: 'h-12',
 		}
 	}
-};
-
-function onChange(index: Number) {
-	switch (index) {
-		case 0:
-			navigateTo("/list")
-			break
-		case 1:
-			navigateTo("/recommendation")
-			break
-		case 2:
-			navigateTo("/settings")
-			break
-	}
 }
+
+const paths = ['/list', '/recommendation', '/settings']
+
+function onChange(index: number) {
+	navigateTo(paths[index])
+}
+
+const route = useRoute()
+
+const selected = computed(() => {
+	return paths.indexOf(route.fullPath);
+})
 
 </script>
 
@@ -55,7 +51,7 @@ function onChange(index: Number) {
 			<slot/>
 		</div>
 
-		<UTabs :items="items" :ui="ui" @change="onChange">
+		<UTabs :model-value="selected" :items="items" :ui="ui" @change="onChange">
 			<template #icon="{ item, selected }">
 				<UIcon :name="item.icon" class="h-6 w-6" :class="[selected && 'text-primary-500 dark:text-primary-400']" />
 			</template>
