@@ -1,6 +1,9 @@
 <script setup lang="ts">
 useHead({
-	title: 'ZepZep'
+	title: 'ZepZep',
+	bodyAttrs: {
+		class: 'bg-neutral-900'
+	}
 })
 </script>
 
