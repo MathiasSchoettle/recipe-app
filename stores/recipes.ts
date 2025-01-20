@@ -44,11 +44,26 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 		(id: number): Recipe | undefined => recipes.value.find((recipe) => recipe.id === id)
 	))
 
+	interface Data {
+		title: string
+		ingredients: string[]
+		image: string
+		time: number
+	}
+
+	function addRecipe(data: Data) {
+		recipes.value.push({
+			id: recipes.value.at(-1)?.id ?? 0,
+			...data
+		})
+	}
+
 	getData();
 
 	return {
 		recipes,
 		getRecipe,
-		hasData
+		hasData,
+		addRecipe
 	}
 })

@@ -45,10 +45,14 @@ const selected = computed(() => {
 </script>
 
 <template>
-	<div class="h-dvh flex flex-col bg-neutral-900">
+	<div class="h-dvh flex flex-col bg-neutral-900 relative">
 
 		<div class="h-[calc(100dvh-4rem)] overflow-scroll">
 			<slot/>
+		</div>
+
+		<div class="absolute bottom-[5rem] right-[1rem] z-50">
+			<UButton :ui="{ rounded: 'rounded-full' }" size="xl" icon="i-lucide-plus" square color="gray" @click="navigateTo('/add-recipe')"/>
 		</div>
 
 		<UTabs :model-value="selected" :items="items" :ui="ui" @change="onChange">
