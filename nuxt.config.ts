@@ -5,6 +5,8 @@ export default defineNuxtConfig({
 	typescript: { typeCheck: true },
 	modules: ['@nuxt/ui', '@pinia/nuxt'],
 	routeRules: {
-		'/': {redirect: '/list'}
+		'/': {
+			redirect: '/list',
+		},
 	},
 })
