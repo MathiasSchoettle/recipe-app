@@ -10,32 +10,14 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 	const recipes = ref<Recipe[]>([])
 
 	function getData() {
-		new Promise(resolve => setTimeout(resolve, 1000))
-			.then(() => {
-				recipes.value = [
-					{
-						id: 0,
-						title: 'Kartoffelgratin',
-						ingredients: ['Kartoffeln', 'Sahne', 'Parmesan', 'Milch', 'Muskatnuss', 'Salz', 'Pfeffer'],
-						image: 'https://img.chefkoch-cdn.de/rezepte/837601188560864/bilder/971685/crop-960x540/kartoffelgratin.jpg',
-						time: 1800,
-					},
-					{
-						id: 1,
-						title: 'Spaghetti Bolognese',
-						ingredients: ['Spaghetti', 'Hackfleisch', 'Tomaten', 'Karotten'],
-						image: 'https://images.eatsmarter.de/sites/default/files/styles/facebook/public/spaghetti-bolognese-original-59303.jpg',
-						time: 2400,
-					},
-					{
-						id: 2,
-						title: 'Tiramisu',
-						ingredients: ['Mascarpone', 'Eier', 'Puderzucker', 'Ladyfingers', 'Kakaopulver'],
-						image: 'https://img.chefkoch-cdn.de/rezepte/264171102553424/bilder/1518856/crop-960x540/tiramisu.jpg',
-						time: 5400,
-					},
-				]
-			});
+		$fetch("/api/recipes", {
+			method: 'GET',
+		}).then((data) => {
+			console.log(data)
+			recipes.value = data.data
+		}).catch((err) => {
+			console.error(err)
+		})
 	}
 
 	const hasData = computed(() => recipes.value.length > 0);
@@ -52,9 +34,17 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 	}
 
 	function addRecipe(data: Data) {
-		recipes.value.push({
-			id: recipes.value.at(-1)?.id ?? 0,
-			...data
+		$fetch("/api/add/recipe", {
+			method: 'POST',
+			body: {
+				data: data
+			}
+		}).then((data) => {
+			recipes.value.push(
+				data
+			)
+		}).catch((err) => {
+			console.error(err)
 		})
 	}
 
