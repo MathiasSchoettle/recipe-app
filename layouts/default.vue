@@ -10,6 +10,14 @@ function tabClick(id: number) {
 	navigateTo(paths[id])
 }
 
+function createNewRecipe() {
+	console.warn('not yet implemented')
+}
+
+function createNewRecipeFromPaste() {
+	navigateTo('add/paste')
+}
+
 </script>
 
 <template>
@@ -23,7 +31,7 @@ function tabClick(id: number) {
 				<TabButton :id="0" :current="tabId" icon="i-lucide-list" @click="tabClick"/>
 				<TabButton :id="1" :current="tabId" icon="i-lucide-cooking-pot" @click="tabClick"/>
 
-				<AddButton/>
+				<AddButton @create="createNewRecipe" @paste="createNewRecipeFromPaste"/>
 
 				<TabButton :id="2" :current="tabId" icon="i-lucide-carrot" @click="tabClick"/>
 				<TabButton :id="3" :current="tabId" icon="i-lucide-settings" @click="tabClick"/>

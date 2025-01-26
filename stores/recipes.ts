@@ -3,7 +3,7 @@ export interface Recipe {
 	title: string
 	ingredients: string[]
 	image: string
-	time: number
+	minutes: number
 }
 
 export const useRecipeStore = defineStore('recipeStore', () => {
@@ -13,7 +13,6 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 		$fetch("/api/recipes", {
 			method: 'GET',
 		}).then((data) => {
-			console.log(data)
 			recipes.value = data.data
 		}).catch((err) => {
 			console.error(err)
@@ -29,8 +28,9 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 	interface Data {
 		title: string
 		ingredients: string[]
+		website: string
 		image: string
-		time: number
+		minutes: number
 	}
 
 	function addRecipe(data: Data) {

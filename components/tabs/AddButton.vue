@@ -1,5 +1,10 @@
 <script setup lang="ts">
 
+const emits = defineEmits<{
+	(e: 'create'): void,
+	(e: 'paste'): void,
+}>()
+
 const ui = {
 	rounded: 'rounded-full',
 	trigger: 'h-full shadow-lg shadow-black/10 rounded-full',
@@ -23,11 +28,11 @@ const ui = {
 					<UIcon name="i-lucide-chevron-down" class="size-7"/>
 				</button>
 
-				<button class="text-neutral-400 size-14 rounded-full flex items-center justify-center">
+				<button @click="emits('paste')" class="text-neutral-400 size-14 rounded-full flex items-center justify-center">
 					<UIcon name="i-lucide-clipboard-list" class="size-7"/>
 				</button>
 
-				<button class="text-neutral-400 size-14 rounded-full flex items-center justify-center">
+				<button @click="emits('create')" class="text-neutral-400 size-14 rounded-full flex items-center justify-center">
 					<UIcon name="i-lucide-plus" class="size-7"/>
 				</button>
 			</div>
