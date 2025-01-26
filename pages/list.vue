@@ -17,15 +17,19 @@ const store = useRecipeStore();
 
 		<UDivider icon="i-lucide-align-justify" :ui="{ icon: {base: 'text-neutral-500'}}" size="xs"/>
 
-		<template v-if="store.hasData" v-for="recipe in store.recipes">
-			<NuxtLink :to="'recipe-' + recipe.id">
-				<RecipeCard :recipe="recipe"/>
-			</NuxtLink>
-		</template>
-		<div v-else>
-			<div class="w-full flex justify-center">
-				<UIcon name="i-lucide-loader" class="animate-spin size-10 text-neutral-500"/>
+		<ClientOnly>
+			<template v-if="store.hasData">
+				<div v-for="recipe in store.recipes">
+					<NuxtLink :to="'recipe-' + recipe.id">
+						<RecipeCard :recipe="recipe"/>
+					</NuxtLink>
+				</div>
+			</template>
+			<div v-else>
+				<div class="w-full flex justify-center">
+					<UIcon name="i-lucide-loader" class="animate-spin size-10 text-neutral-500"/>
+				</div>
 			</div>
-		</div>
+		</ClientOnly>
 	</div>
 </template>
