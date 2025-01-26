@@ -27,7 +27,7 @@ export default defineEventHandler<RecipeMetaDataRequest>(async (event) => {
 
 		return metaDataFromTags(metaTags)
 	} catch(e) {
-		console.log(e)
+		// console.log(e)
 		return emptyMetaData
 	}
 })
