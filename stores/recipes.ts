@@ -34,7 +34,7 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 	}
 
 	function addRecipe(data: Data) {
-		$fetch("/api/add/recipe", {
+		$fetch("/api/recipe", {
 			method: 'POST',
 			body: {
 				data: data
