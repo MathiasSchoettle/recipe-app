@@ -40,7 +40,7 @@ const timeString = computed(() => {
 <template>
 	<div class="w-full bg-neutral-800 rounded-md flex gap-5 p-2 overflow-hidden border border-neutral-700 shadow-lg cursor-pointer">
 
-		<div :style="styles" class="shadow-lg rounded-lg size-28 min-w-28 bg-neutral-500"></div>
+		<div :style="styles" class="shadow-md shadow-black/10 rounded-lg size-28 min-w-28 bg-neutral-500"></div>
 
 		<div  class="flex-1 h-fill flex gap-1.5 pt-1 flex-col">
 			<div class="font-bold">{{ recipe.title }}</div>

@@ -1,64 +1,33 @@
 <script setup lang="ts">
+import TabButton from '~/components/tabs/TabButton.vue';
+import AddButton from '~/components/tabs/AddButton.vue';
+const paths = ['list', 'recommendation', 'settings', 'settings']
 
-const items = [
-	{
-		label: '',
-		icon: 'i-lucide-list',
-	},
-	{
-		label: '',
-		icon: 'i-lucide-cooking-pot',
-	}
-	,
-	{
-		label: '',
-		icon: 'i-lucide-settings',
-	}
-]
+const tabId = ref(0)
 
-const ui = {
-	wrapper: 'relative space-y-0 shadow-xl border-t border-neutral-700',
-	container: 'h-0 w-full',
-	list: {
-		base: 'shadow-lg',
-		height: 'h-16',
-		rounded: 'rounded-none',
-		padding: 'py-2 px-2.5',
-		tab: {
-			height: 'h-12',
-		}
-	}
+function tabClick(id: number) {
+	tabId.value = id
+	navigateTo(paths[id])
 }
-
-const paths = ['/list', '/recommendation', '/settings']
-
-function onChange(index: number) {
-	navigateTo(paths[index])
-}
-
-const route = useRoute()
-
-const selected = computed(() => {
-	return paths.indexOf(route.fullPath);
-})
 
 </script>
 
 <template>
-	<div class="h-dvh flex flex-col bg-neutral-900 relative">
-
-		<div class="h-[calc(100dvh-4rem)] overflow-scroll">
+	<div class="h-dvh flex flex-col bg-neutral-800 relative overflow-hidden">
+		<div class="h-[calc(100dvh-5rem)] w-full overflow-hidden absolute top-0 bg-neutral-900 rounded-b-xl border-b-[1px] border-neutral-700">
 			<slot/>
 		</div>
 
-		<div class="absolute bottom-[5rem] right-[1rem] z-50">
-			<UButton :ui="{ rounded: 'rounded-full' }" size="xl" icon="i-lucide-plus" square color="gray" @click="navigateTo('/add-recipe')"/>
-		</div>
+		<div class="w-full h-[5rem] bg-neutral-800 flex items-center justify-center p-3 absolute bottom-0 left-0">
+			<div class="h-full w-full flex justify-center gap-5">
+				<TabButton :id="0" :current="tabId" icon="i-lucide-list" @click="tabClick"/>
+				<TabButton :id="1" :current="tabId" icon="i-lucide-cooking-pot" @click="tabClick"/>
 
-		<UTabs :model-value="selected" :items="items" :ui="ui" @change="onChange">
-			<template #icon="{ item, selected }">
-				<UIcon :name="item.icon" class="h-6 w-6" :class="[selected && 'text-primary-500 dark:text-primary-400']" />
-			</template>
-		</UTabs>
+				<AddButton/>
+
+				<TabButton :id="2" :current="tabId" icon="i-lucide-carrot" @click="tabClick"/>
+				<TabButton :id="3" :current="tabId" icon="i-lucide-settings" @click="tabClick"/>
+			</div>
+		</div>
 	</div>
 </template>
