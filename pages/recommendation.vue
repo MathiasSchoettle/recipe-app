@@ -3,7 +3,7 @@
 </script>
 
 <template>
-	<div class="w-full h-full flex justify-center items-center p-5">
+	<div class="w-full h-full flex justify-center items-center p-2">
 		<UAlert
 			icon="i-lucide-cooking-pot"
 			description="The recommendation page is still under development."

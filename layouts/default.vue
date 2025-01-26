@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TabButton from '~/components/tabs/TabButton.vue';
 import AddButton from '~/components/tabs/AddButton.vue';
-const paths = ['list', 'recommendation', 'settings', 'settings']
+const paths = ['/list', '/recommendation', '/ingredients', '/settings']
 
 const tabId = ref(0)
 
@@ -17,6 +17,11 @@ function createNewRecipe() {
 function createNewRecipeFromPaste() {
 	navigateTo('add/paste')
 }
+
+const route = useRoute()
+watchEffect(() => {
+	tabId.value = paths.indexOf(route.path)
+})
 
 </script>
 

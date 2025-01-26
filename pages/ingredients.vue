@@ -1,8 +1,8 @@
 <template>
 	<div class="w-full h-full flex justify-center items-center p-2">
 		<UAlert
-			icon="i-lucide-settings"
-			description="The settings page is still under development."
+			icon="i-lucide-carrot"
+			description="The Ingredients page is still under development."
 			title="Heads up!"
 		/>
 	</div>
