@@ -13,7 +13,6 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 		$fetch("/api/recipes", {
 			method: 'GET',
 		}).then((data) => {
-			console.log(data)
 			recipes.value = data.data
 		}).catch((err) => {
 			console.error(err)
