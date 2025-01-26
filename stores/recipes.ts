@@ -47,12 +47,28 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 		})
 	}
 
+	function removeRecipe(recipe_id: number) {
+		$fetch("/api/recipe", {
+			method: 'DELETE',
+			body: {
+				id: recipe_id
+			}
+		}).then((id) => {
+			recipes.value = recipes.value.filter(
+				r => r.id !== id
+			)
+		}).catch((err) => {
+			console.error(err)
+		})
+	}
+
 	getData();
 
 	return {
 		recipes,
 		getRecipe,
 		hasData,
-		addRecipe
+		addRecipe,
+		removeRecipe
 	}
 })

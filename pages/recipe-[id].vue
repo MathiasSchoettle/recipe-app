@@ -9,6 +9,11 @@ definePageMeta({
 	layout: 'custom',
 })
 
+function remove() {
+	store.removeRecipe(Number(route.params.id))
+	navigateTo('/list')
+}
+
 </script>
 
 <template>
@@ -18,6 +23,9 @@ definePageMeta({
 				<div>
 					{{ recipe?.title }}
 				</div>
+				<UButton color="red" @click="remove">
+				Delete
+				</UButton>
 			</template>
 
 			<Placeholder class="h-56" />
