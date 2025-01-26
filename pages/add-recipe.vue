@@ -2,6 +2,7 @@
 import type { FormError, FormSubmitEvent } from '#ui/types'
 import { useDebounceFn } from '@vueuse/core'
 import { onWatcherCleanup } from 'vue';
+import type { RecipeMetaData } from '~/server/api/recipeMeta';
 
 definePageMeta({
 	layout: 'custom',
@@ -17,8 +18,6 @@ const state = reactive({
 const newIngredient = ref('');
 const formRef = useTemplateRef('form');
 
-const image = ref('')
-
 function validate(state: any): FormError[] {
 	const errors = []
 
@@ -30,26 +29,34 @@ function validate(state: any): FormError[] {
 	return errors
 }
 
+const recipeMetaData = ref<RecipeMetaData>()
 const loadingImage = ref(false)
 
 const debounced = useDebounceFn((controller) => {
 	if (!state.website) {
-		image.value = ''
+		recipeMetaData.value = {
+			title: '',
+			description: '',
+			imageURL: '',
+			hasImage: false,
+		}
 		return
 	}
 
 	loadingImage.value = true
 
-	$fetch('/api/recipeImage', {
+	$fetch('/api/recipeMeta', {
 		query: {
 			url: state.website
 		},
-		signal: controller.signal
+		signal: controller.signal,
 	})
-	.then((res) => {
-		image.value = res.imageUrl
+	.then((result) => {
+		console.log(JSON.stringify(result, null, ' '))
+		recipeMetaData.value = result
 		loadingImage.value = false
 	})
+	.catch(() => {})
 }, 500)
 
 watch(() => state.website, () => {
@@ -71,13 +78,13 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 }
 
 function addRecipe() {
-	state.ingredients.push(newIngredient.value);
-	newIngredient.value = '';
-	formRef.value?.validate('ingredients');
+	state.ingredients.push(newIngredient.value)
+	newIngredient.value = ''
+	formRef.value?.validate('ingredients')
 }
 
 function removeIngredient(ingredient: string) {
-	state.ingredients.splice(state.ingredients.indexOf(ingredient), 1);
+	state.ingredients.splice(state.ingredients.indexOf(ingredient), 1)
 }
 
 </script>
@@ -85,9 +92,9 @@ function removeIngredient(ingredient: string) {
 <template>
 	<div class="p-5">
 
-		<div class="w-full h-52 flex justify-center items-center border border-neutral-600 shadow-md rounded-md mb-3" :class="loadingImage ? 'opacity-50' : 'opacity-100'" :style="{backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}">
+		<div class="w-full h-52 flex justify-center items-center border border-neutral-600 shadow-md rounded-md mb-3" :style="{backgroundImage: `url(${recipeMetaData?.imageURL})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}">
 			<UIcon v-if="loadingImage" name="i-lucide-loader-circle" class="size-8 animate-spin"/>
-			<UIcon v-if="!loadingImage && !image" name="i-lucide-image" class="size-20 text-neutral-800"/>
+			<UIcon v-if="!loadingImage && !recipeMetaData?.hasImage" name="i-lucide-image" class="size-20 text-neutral-800"/>
 		</div>
 
 		<UForm ref="form" :validate="validate" :state="state" @submit="onSubmit" class="space-y-2">
